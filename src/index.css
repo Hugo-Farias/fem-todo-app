@@ -8,11 +8,25 @@
     --content: 235deg 19% 35%;
     --accent1: 192deg 100% 67%;
     --accent2: 280deg 87% 65%;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
+
+    transition: background-image 0.5s;
+
+    background-image: url("./assets/bg-mobile-light.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @media (min-width: 640px) {
+      background-image: url("./assets/bg-desktop-light.jpg");
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background-image: url("./assets/bg-mobile-dark.jpg");
       --bkg: 235deg 21% 11%;
       --content: 0deg 0% 100%;
+
+      @media (min-width: 640px) {
+        background-image: url("./assets/bg-desktop-dark.jpg");
+      }
     }
   }
 }
