@@ -1,8 +1,6 @@
 function App() {
   return (
-    <div className="bg-red-500 font-extrabold text-amber-950">
-      Hesdtgsdryhgllo World!
-    </div>
+    <div className="font-title text-amber-500">Hesdtgsdryhgllo World!</div>
   );
 }
 
