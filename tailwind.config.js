@@ -11,7 +11,7 @@ export default {
         bkg: "hsl(var(--bkg) / <alpha-value>)",
         content: "hsl(var(--content) / <alpha-value>)",
       },
-      fontFamily: { title: ['"Josefin Sans"', "sans-serif"] },
+      fontFamily: { josefin: ['"Josefin Slab"', "serif"] },
     },
   },
   plugins: [],

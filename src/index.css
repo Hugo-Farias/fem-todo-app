@@ -4,16 +4,15 @@
 
 @layer base {
   :root {
-    --accent1: 192deg, 100%, 67%;
-    --accent2: 280deg, 87%, 65%;
-    --bkg: 235deg, 21%, 11%;
-    --content: 0deg, 0%, 100%;
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bkg: 0deg, 0%, 98%;
-        --content: 235deg, 19%, 35%;
-      }
+    --bkg: 0deg 0% 98%;
+    --content: 235deg 19% 35%;
+    --accent1: 192deg 100% 67%;
+    --accent2: 280deg 87% 65%;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bkg: 235deg 21% 11%;
+      --content: 0deg 0% 100%;
     }
   }
 }

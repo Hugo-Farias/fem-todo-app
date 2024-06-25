@@ -1,7 +1,5 @@
 function App() {
-  return (
-    <div className="font-title text-amber-500">Hesdtgsdryhgllo World!</div>
-  );
+  return <div className="bg-bkg text-content">Hell World</div>;
 }
 
 export default App;
