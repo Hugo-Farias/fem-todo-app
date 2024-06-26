@@ -9,24 +9,44 @@
     --accent1: 192deg 100% 67%;
     --accent2: 280deg 87% 65%;
 
-    transition: background-image 0.5s;
+    /*font-size: 10px;*/
 
-    background-image: url("./assets/bg-mobile-light.jpg");
+    transition: background-image 0.5s ease-in-out;
     background-repeat: repeat-x;
-    background-size: cover;
+    background-size: contain;
 
-    @media (min-width: 640px) {
-      background-image: url("./assets/bg-desktop-light.jpg");
+    &[data-theme="light"] {
+      background-image: url("./assets/bg-mobile-light.jpg");
+
+      @media (min-width: 500px) {
+        background-image: url("./assets/bg-desktop-light.jpg");
+      }
+    }
+
+    &[data-theme="dark"] {
+      --bkg: 235deg 21% 11%;
+      --content: 0deg 0% 100%;
+      background-image: url("./assets/bg-mobile-dark.jpg");
+
+      @media (min-width: 500px) {
+        background-image: url("./assets/bg-desktop-dark.jpg");
+      }
     }
   }
-}
 
-:root[data-theme="dark"] {
-  background-image: url("./assets/bg-mobile-dark.jpg");
-  --bkg: 235deg 21% 11%;
-  --content: 0deg 0% 100%;
+  .checkbox {
+    position: relative;
+  }
 
-  @media (min-width: 640px) {
-    background-image: url("./assets/bg-desktop-dark.jpg");
+  .checkbox::before {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    border: solid black 1px;
+    height: 20px;
+    aspect-ratio: 1;
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }

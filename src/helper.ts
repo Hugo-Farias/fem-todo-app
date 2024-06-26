@@ -6,10 +6,10 @@ export const setLocalStorage = (key: string, value: boolean) => {
 };
 
 // Get darkmode value from localStorage
-export const getLocalStorage = (key: string) => {
+export const getLocalStorage = (key: string, fallback: boolean) => {
   const storedValue = localStorage.getItem(key);
   if (!storedValue) {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return fallback;
   }
   return storedValue ? JSON.parse(storedValue) : null;
 };
