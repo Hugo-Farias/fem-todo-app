@@ -2,21 +2,30 @@ import logo from "./assets/logo.svg";
 import sun from "./assets/light.svg";
 import moon from "./assets/dark.svg";
 import { useEffect, useState } from "react";
-import { getLocalStorage, setLocalStorage, storageDark } from "./helper.ts";
+import {
+  getLocalStorage,
+  setLocalStorage,
+  storageThemeKey,
+  deleteFromList,
+} from "./helper.ts";
+import List from "./component/List.tsx";
 
 const dummy = [
-  "Complete online JavaScript course",
-  "Jog around the park 3x",
-  "10 minutes meditaion",
-  "Read for 1 hour",
-  "Pick up groceries",
-  "Complete Todo App on Frontend Mentor",
+  { id: 1, name: "Complete online JavaScript course" },
+  { id: 2, name: "Jog around the park 3x" },
+  { id: 3, name: "10 minutes meditaion" },
+  { id: 4, name: "Read for 1 hour" },
+  { id: 5, name: "Pick up groceries" },
+  { id: 6, name: "Complete Todo App on Frontend Mentor" },
 ];
 
+export type dataType = typeof dummy;
+
 function App() {
+  const [data, setData] = useState<dataType>(dummy);
   const [darkmode, setDarkmode] = useState<boolean>(
     getLocalStorage(
-      storageDark,
+      storageThemeKey,
       window.matchMedia("(prefers-color-scheme: dark)").matches,
     ),
   );
@@ -26,11 +35,15 @@ function App() {
       "data-theme",
       darkmode ? "dark" : "light",
     );
-    setLocalStorage(storageDark, darkmode);
+    setLocalStorage(storageThemeKey, darkmode);
   }, [darkmode]);
 
+  const handleRemove = function (id: number) {
+    setData((prev) => deleteFromList(prev, id));
+  };
+
   return (
-    <div className="text-xsm px-8 font-josefin">
+    <div className="px-8 font-josefin text-xsm">
       <header className="my-12 flex h-5 flex-wrap items-center justify-between">
         <img src={logo} alt="Todo App Logo" />
         <button onClick={() => setDarkmode((prev) => !prev)}>
@@ -40,28 +53,10 @@ function App() {
       <main>
         <input
           type="text"
-          className="px-13 mb-4 min-h-12 w-full rounded-md bg-bkg text-content shadow-xl"
+          className="mb-4 min-h-12 w-full rounded-md bg-bkg px-13 text-content shadow-xl"
           placeholder="Create a new todo..."
         />
-        <ul className="w-full rounded-md bg-bkg text-content drop-shadow-xl">
-          {dummy.map((v, i) => (
-            <li key={i} className="flex h-12 items-center gap-3 px-5">
-              <input
-                type="checkbox"
-                id={`check${i}`}
-                name="checkbox"
-                value="1"
-                className="rounded-[50%] hover:cursor-pointer"
-              />
-              <label
-                htmlFor={`check${i}`}
-                className="flex-grow py-2 hover:cursor-pointer"
-              >
-                {v}
-              </label>
-            </li>
-          ))}
-        </ul>
+        <List data={data} remove={handleRemove} />
       </main>
     </div>
   );

@@ -17,6 +17,7 @@
 
     &[data-theme="light"] {
       background-image: url("./assets/bg-mobile-light.jpg");
+      background-color: #fafafa;
 
       @media (min-width: 500px) {
         background-image: url("./assets/bg-desktop-light.jpg");
@@ -24,29 +25,14 @@
     }
 
     &[data-theme="dark"] {
-      --bkg: 235deg 21% 11%;
+      --bkg: 235deg 24% 19%;
       --content: 0deg 0% 100%;
+      background-color: #171823;
       background-image: url("./assets/bg-mobile-dark.jpg");
 
       @media (min-width: 500px) {
         background-image: url("./assets/bg-desktop-dark.jpg");
       }
     }
-  }
-
-  .checkbox {
-    position: relative;
-  }
-
-  .checkbox::before {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    border: solid black 1px;
-    height: 20px;
-    aspect-ratio: 1;
-    left: 5%;
-    top: 50%;
-    transform: translateY(-50%);
   }
 }

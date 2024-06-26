@@ -1,4 +1,6 @@
-export const storageDark = "darkMode";
+import { dataType } from "./App.tsx";
+
+export const storageThemeKey = "darkMode";
 
 // Set value in localStorage
 export const setLocalStorage = (key: string, value: boolean) => {
@@ -12,4 +14,8 @@ export const getLocalStorage = (key: string, fallback: boolean) => {
     return fallback;
   }
   return storedValue ? JSON.parse(storedValue) : null;
+};
+
+export const deleteFromList = function (list: dataType, id: number) {
+  return list.filter((v) => id !== v.id);
 };
