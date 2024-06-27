@@ -22,18 +22,5 @@ export default {
       fontFamily: { josefin: ['"Josefin sans"', "serif"] },
     },
   },
-  plugins: [
-    forms,
-    function ({ addUtilities }) {
-      addUtilities({
-        ".border-gradient": {
-          "box-sizing": " content-box",
-          "border-width": " 8px",
-          "border-style": " solid",
-          "border-image": "linear-gradient(to right bottom, #55DDFF, #C058F3)",
-          "border-image-slice": " 1",
-        },
-      });
-    },
-  ],
+  plugins: [forms],
 };

@@ -1,6 +1,6 @@
 import logo from "./assets/logo.svg";
-import sun from "./assets/light.svg";
-import moon from "./assets/dark.svg";
+import sun from "./assets/icon-sun.svg";
+import moon from "./assets/icon-moon.svg";
 import { useEffect, useState } from "react";
 import {
   getLocalStorage,
@@ -44,7 +44,7 @@ function App() {
 
   return (
     <div className="px-8 font-josefin text-xsm">
-      <header className="my-12 flex h-5 flex-wrap items-center justify-between">
+      <header className="my-12 flex h-5 flex-wrap justify-between">
         <img src={logo} alt="Todo App Logo" />
         <button onClick={() => setDarkmode((prev) => !prev)}>
           <img src={darkmode ? sun : moon} alt="Toggle theme mode" />
@@ -53,7 +53,7 @@ function App() {
       <main>
         <input
           type="text"
-          className="mb-4 min-h-12 w-full rounded-xl bg-bkg px-13 text-content shadow-xl"
+          className="mb-4 min-h-12 w-full rounded-xl bg-bkg px-13 text-content shadow-xl transition-colors duration-200"
           placeholder="Create a new todo..."
         />
         <List data={data} remove={handleRemove} />

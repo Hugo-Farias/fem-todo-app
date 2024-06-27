@@ -11,7 +11,8 @@
 
     /*font-size: 10px;*/
 
-    transition: background-image 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    transition-property: background-image, background-color;
     background-repeat: repeat-x;
     background-size: contain;
 
@@ -32,6 +33,35 @@
 
       @media (min-width: 500px) {
         background-image: url("./assets/bg-desktop-dark.jpg");
+      }
+    }
+  }
+
+  .circle-gradient {
+    position: relative;
+
+    &::before {
+      content: "";
+      width: 20px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      background-image: linear-gradient(white, white);
+      background-origin: border-box;
+      background-clip: content-box, border-box;
+      /*noinspection CssInvalidPropertyValue,CssInvalidFunction*/
+      -webkit-mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+
+      &:hover {
+        background-image: linear-gradient(white, white),
+          linear-gradient(
+            to bottom right,
+            hsl(var(--accent1)),
+            hsl(var(--accent2))
+          );
       }
     }
   }
