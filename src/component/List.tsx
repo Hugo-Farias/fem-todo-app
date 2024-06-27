@@ -13,8 +13,11 @@ function List({ data, remove }: propT) {
   };
 
   return (
-    <ul className="w-full overflow-hidden rounded-md pb-10 text-content drop-shadow-xl">
-      <AnimatePresence>
+    <AnimatePresence>
+      <motion.ul
+        layout
+        className="w-full overflow-hidden rounded-xl bg-bkg text-content drop-shadow-xl"
+      >
         {data.map((v) => (
           <motion.li
             layout
@@ -28,7 +31,7 @@ function List({ data, remove }: propT) {
               id={`check${v.id}`}
               name="checkbox"
               value="1"
-              className="h-5 w-5 rounded-[50%] border-content/40 bg-transparent outline-transparent hover:cursor-pointer"
+              className="border-gradient size-5 rounded-[50%] border-content/40 bg-transparent hover:cursor-pointer"
             />
             <label
               htmlFor={`check${v.id}`}
@@ -41,8 +44,8 @@ function List({ data, remove }: propT) {
             </button>
           </motion.li>
         ))}
-      </AnimatePresence>
-    </ul>
+      </motion.ul>
+    </AnimatePresence>
   );
 }
 

@@ -53,7 +53,7 @@ function App() {
       <main>
         <input
           type="text"
-          className="mb-4 min-h-12 w-full rounded-md bg-bkg px-13 text-content shadow-xl"
+          className="mb-4 min-h-12 w-full rounded-xl bg-bkg px-13 text-content shadow-xl"
           placeholder="Create a new todo..."
         />
         <List data={data} remove={handleRemove} />
