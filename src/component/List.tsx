@@ -1,4 +1,6 @@
 import cross from "../assets/icon-cross.svg";
+import checkbox from "../assets/icon-checkbox.svg";
+import checkmarked from "../assets/icon-checkmarked.svg";
 import { dataType } from "../App.tsx";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -19,15 +21,22 @@ function List({ data, remove }: propT) {
           <motion.li
             layout
             transition={{ duration: 0.2 }}
-            exit={{ x: "50%", opacity: 0 }}
+            exit={{ x: "100%", opacity: 0 }}
             key={v.id}
-            className="flex h-12 items-center gap-3 border-b-[1px] border-content/20 bg-bkg pr-5 transition-colors duration-200"
+            className="group flex h-12 items-center gap-3 border-b-[1px] border-content/20 bg-bkg transition-colors duration-200 hover:cursor-pointer"
           >
-            <div className="circle-gradient flex h-full flex-grow items-center pl-13 hover:cursor-pointer">
+            <img
+              className={`${v.marked || "opacity-50 grayscale"} pl-5 transition-opacity duration-300 group-hover:opacity-100 group-hover:grayscale-0`}
+              src={v.marked ? checkmarked : checkbox}
+              alt="check todo item"
+            ></img>
+            <div
+              className={`${v.marked && "line-through opacity-50"} flex h-full flex-grow items-center`}
+            >
               {v.name}
             </div>
-            <button onClick={() => handleClick(v.id)}>
-              <img src={cross} alt="Remove from list" />
+            <button className="px-3 py-2" onClick={() => handleClick(v.id)}>
+              <img className="size-3" src={cross} alt="Remove from list" />
             </button>
           </motion.li>
         ))}

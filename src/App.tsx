@@ -11,12 +11,12 @@ import {
 import List from "./component/List.tsx";
 
 const dummy = [
-  { id: 1, name: "Complete online JavaScript course" },
-  { id: 2, name: "Jog around the park 3x" },
-  { id: 3, name: "10 minutes meditaion" },
-  { id: 4, name: "Read for 1 hour" },
-  { id: 5, name: "Pick up groceries" },
-  { id: 6, name: "Complete Todo App on Frontend Mentor" },
+  { id: 1, name: "Complete online JavaScript course", marked: true },
+  { id: 2, name: "Jog around the park 3x", marked: false },
+  { id: 3, name: "10 minutes meditaion", marked: false },
+  { id: 4, name: "Read for 1 hour", marked: false },
+  { id: 5, name: "Pick up groceries", marked: false },
+  { id: 6, name: "Complete Todo App on Frontend Mentor", marked: false },
 ];
 
 export type dataType = typeof dummy;
@@ -43,7 +43,7 @@ function App() {
   };
 
   return (
-    <div className="px-8 font-josefin text-xsm">
+    <div className="px-6 font-josefin text-xsm">
       <header className="my-12 flex h-5 flex-wrap justify-between">
         <img src={logo} alt="Todo App Logo" />
         <button onClick={() => setDarkmode((prev) => !prev)}>
@@ -53,7 +53,7 @@ function App() {
       <main>
         <input
           type="text"
-          className="mb-4 min-h-12 w-full rounded-xl bg-bkg px-13 text-content shadow-xl transition-colors duration-200"
+          className="mb-4 h-12 w-full rounded-xl bg-bkg px-13 text-content shadow-xl transition-colors duration-200"
           placeholder="Create a new todo..."
         />
         <List data={data} remove={handleRemove} />
