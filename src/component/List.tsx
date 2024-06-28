@@ -12,7 +12,7 @@ type propT = {
 
 function List({ data, remove, mark }: propT) {
   return (
-    <motion.ul className="w-full overflow-hidden rounded-xl text-content drop-shadow-xl">
+    <ul className="w-full divide-y divide-content/20 overflow-hidden rounded-xl text-content drop-shadow-xl">
       <AnimatePresence>
         {data.map((v) => (
           <motion.li
@@ -22,7 +22,7 @@ function List({ data, remove, mark }: propT) {
             key={v.id}
             data-id={v.id}
             onClick={() => mark(v.id)}
-            className="group flex h-12 items-center gap-3 border-b-[1px] border-content/20 bg-bkg transition-colors duration-200 hover:cursor-pointer"
+            className="group flex h-12 items-center gap-3 bg-bkg transition-colors duration-200 hover:cursor-pointer"
           >
             <img
               className={`${v.marked || "opacity-50 grayscale"} pl-5 transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0`}
@@ -50,7 +50,7 @@ function List({ data, remove, mark }: propT) {
           </motion.li>
         ))}
       </AnimatePresence>
-    </motion.ul>
+    </ul>
   );
 }
 

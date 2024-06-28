@@ -15,13 +15,12 @@
     transition-property: background-image, background-color;
     background-repeat: repeat-x;
     background-size: contain;
-    /*background-size: contain 200px;*/
-    /*min-height: 200px;*/
+    min-height: 341px;
     /*max-height: 341px;*/
 
-    @media (min-width: 640px) {
-      max-height: unset;
-    }
+    /*@media (min-width: 640px) {*/
+    /*  max-height: unset;*/
+    /*}*/
 
     &[data-theme="light"] {
       background-image: url("./assets/bg-mobile-light.jpg");
