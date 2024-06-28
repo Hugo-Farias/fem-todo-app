@@ -29,7 +29,7 @@ function List({ data, remove, mark, reorder }: propT) {
             onDragEnd={() => setIsDragState(false)}
             value={v}
             key={v.id}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.1 }}
             exit={{ scale: 0.9, x: "30%", opacity: 0 }}
             onClick={() => {
               if (isDragState) return;

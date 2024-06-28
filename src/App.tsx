@@ -1,6 +1,7 @@
 import logo from "./assets/logo.svg";
 import sun from "./assets/icon-sun.svg";
 import moon from "./assets/icon-moon.svg";
+import checkbox from "./assets/icon-checkbox.svg";
 import { useEffect, useState } from "react";
 import {
   getLocalStorage,
@@ -58,11 +59,18 @@ function App() {
         </button>
       </header>
       <main>
-        <input
-          type="text"
-          className="mb-4 h-12 w-full rounded-xl border-transparent bg-bkg px-13 text-xsm text-content shadow-xl transition-colors duration-200"
-          placeholder="Create a new todo..."
-        />
+        <div className="relative mb-4 h-12 w-full rounded-xl bg-bkg text-xsm text-content shadow-xl transition-colors duration-200">
+          <img
+            className="absolute left-5 top-1/2 -translate-y-1/2 opacity-50 grayscale"
+            src={checkbox}
+            alt=""
+          />
+          <input
+            className="h-full w-full rounded-xl border-transparent bg-transparent px-13 text-xsm"
+            type="text"
+            placeholder="Create a new todo..."
+          />
+        </div>
         <List
           data={data}
           remove={handleRemove}
