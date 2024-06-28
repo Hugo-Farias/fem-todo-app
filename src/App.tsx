@@ -7,6 +7,7 @@ import {
   setLocalStorage,
   storageThemeKey,
   deleteFromList,
+  toggleFromList,
 } from "./helper.ts";
 import List from "./component/List.tsx";
 
@@ -38,8 +39,14 @@ function App() {
     setLocalStorage(storageThemeKey, darkmode);
   }, [darkmode]);
 
-  const handleRemove = function (id: number) {
+  const handleRemove = function (id: number | null) {
+    if (!id) return;
     setData((prev) => deleteFromList(prev, id));
+  };
+
+  const handleMark = function (id: number | null) {
+    if (!id) return;
+    setData((prev) => toggleFromList(prev, id));
   };
 
   return (
@@ -53,10 +60,10 @@ function App() {
       <main>
         <input
           type="text"
-          className="mb-4 h-12 w-full rounded-xl bg-bkg px-13 text-content shadow-xl transition-colors duration-200"
+          className="mb-4 h-12 w-full rounded-xl border-transparent bg-bkg px-13 text-content shadow-xl transition-colors duration-200"
           placeholder="Create a new todo..."
         />
-        <List data={data} remove={handleRemove} />
+        <List data={data} remove={handleRemove} mark={handleMark} />
       </main>
     </div>
   );
