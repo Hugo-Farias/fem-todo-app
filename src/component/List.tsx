@@ -25,7 +25,7 @@ function List({ data, remove, mark }: propT) {
             className="group flex h-12 items-center gap-3 border-b-[1px] border-content/20 bg-bkg transition-colors duration-200 hover:cursor-pointer"
           >
             <img
-              className={`${v.marked || "opacity-50 grayscale"} pl-5 transition-opacity duration-300 group-hover:opacity-100 group-hover:grayscale-0`}
+              className={`${v.marked || "opacity-50 grayscale"} pl-5 transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0`}
               src={v.marked ? checkmarked : checkbox}
               alt="check todo item"
             ></img>
@@ -35,7 +35,7 @@ function List({ data, remove, mark }: propT) {
               {v.name}
             </div>
             <button
-              className="h-full w-12 hover:bg-black/10"
+              className="h-full w-12 transition-colors hover:bg-content/5"
               onClick={(e) => {
                 e.stopPropagation();
                 remove(v.id);

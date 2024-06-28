@@ -60,7 +60,7 @@ function App() {
       <main>
         <input
           type="text"
-          className="mb-4 h-12 w-full rounded-xl border-transparent bg-bkg px-13 text-content shadow-xl transition-colors duration-200"
+          className="mb-4 h-12 w-full rounded-xl border-transparent bg-bkg px-13 text-xsm text-content shadow-xl transition-colors duration-200"
           placeholder="Create a new todo..."
         />
         <List data={data} remove={handleRemove} mark={handleMark} />

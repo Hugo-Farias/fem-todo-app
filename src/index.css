@@ -15,12 +15,19 @@
     transition-property: background-image, background-color;
     background-repeat: repeat-x;
     background-size: contain;
+    /*background-size: contain 200px;*/
+    /*min-height: 200px;*/
+    /*max-height: 341px;*/
+
+    @media (min-width: 640px) {
+      max-height: unset;
+    }
 
     &[data-theme="light"] {
       background-image: url("./assets/bg-mobile-light.jpg");
       background-color: #fafafa;
 
-      @media (min-width: 500px) {
+      @media (min-width: 640px) {
         background-image: url("./assets/bg-desktop-light.jpg");
       }
     }
@@ -31,37 +38,8 @@
       background-color: #171823;
       background-image: url("./assets/bg-mobile-dark.jpg");
 
-      @media (min-width: 500px) {
+      @media (min-width: 640px) {
         background-image: url("./assets/bg-desktop-dark.jpg");
-      }
-    }
-  }
-
-  .circle-gradient {
-    position: relative;
-
-    &::before {
-      content: "";
-      width: 20px;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      border: 1px solid transparent;
-      background-image: linear-gradient(white, white);
-      background-origin: border-box;
-      background-clip: content-box, border-box;
-      /*noinspection CssInvalidPropertyValue,CssInvalidFunction*/
-      -webkit-mask:
-        linear-gradient(#fff 0 0) padding-box,
-        linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-
-      &:hover {
-        background-image: linear-gradient(white, white),
-          linear-gradient(
-            to bottom right,
-            hsl(var(--accent1)),
-            hsl(var(--accent2))
-          );
       }
     }
   }
