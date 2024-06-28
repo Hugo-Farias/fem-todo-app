@@ -4,25 +4,29 @@
 
 @layer base {
   :root {
-    --bkg: 0deg 0% 98%;
-    --content: 235deg 19% 35%;
     --accent1: 192deg 100% 67%;
     --accent2: 280deg 87% 65%;
 
     /*font-size: 10px;*/
 
-    transition: all 0.5s ease-in-out;
-    transition-property: background-image, background-color;
-    background-repeat: repeat-x;
+    transition: background-image 0.5s ease-in-out;
+    background-repeat: no-repeat;
     background-size: contain;
     min-height: 341px;
-    /*max-height: 341px;*/
+    max-height: 341px;
 
-    /*@media (min-width: 640px) {*/
-    /*  max-height: unset;*/
-    /*}*/
+    @media (min-width: 640px) {
+      min-height: 400px;
+      max-height: unset;
+    }
+
+    @media (min-width: 1920px) {
+      background-size: cover;
+    }
 
     &[data-theme="light"] {
+      --bkg: 0deg 0% 98%;
+      --content: 235deg 19% 35%;
       background-image: url("./assets/bg-mobile-light.jpg");
       background-color: #fafafa;
 
@@ -34,8 +38,8 @@
     &[data-theme="dark"] {
       --bkg: 235deg 24% 19%;
       --content: 0deg 0% 100%;
-      background-color: #171823;
       background-image: url("./assets/bg-mobile-dark.jpg");
+      background-color: #171823;
 
       @media (min-width: 640px) {
         background-image: url("./assets/bg-desktop-dark.jpg");

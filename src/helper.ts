@@ -18,7 +18,6 @@ export const getLocalStorage = (key: string, fallback: boolean) => {
 
 export const toggleFromList = function (data: dataType, id: number): dataType {
   return data.map((item) => {
-    console.log(item.id === id);
     return item.id === id ? { ...item, marked: !item.marked } : item;
   });
 };
