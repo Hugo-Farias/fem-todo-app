@@ -16,12 +16,16 @@ export const getLocalStorage = (key: string, fallback: boolean) => {
   return storedValue ? JSON.parse(storedValue) : null;
 };
 
-export const toggleFromList = function (data: dataType, id: number): dataType {
-  return data.map((item) => {
+export const addToList = function (list: dataType, value: string): dataType {
+  return [{ id: new Date().getTime(), name: value, marked: false }, ...list];
+};
+
+export const toggleFromList = function (list: dataType, id: number): dataType {
+  return list.map((item) => {
     return item.id === id ? { ...item, marked: !item.marked } : item;
   });
 };
 
-export const deleteFromList = function (data: dataType, id: number): dataType {
-  return data.filter((v) => id !== v.id);
+export const deleteFromList = function (list: dataType, id: number): dataType {
+  return list.filter((v) => id !== v.id);
 };

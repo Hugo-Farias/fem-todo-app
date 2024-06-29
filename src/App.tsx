@@ -2,13 +2,14 @@ import logo from "./assets/logo.svg";
 import sun from "./assets/icon-sun.svg";
 import moon from "./assets/icon-moon.svg";
 import checkbox from "./assets/icon-checkbox.svg";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   getLocalStorage,
   setLocalStorage,
   storageThemeKey,
   deleteFromList,
   toggleFromList,
+  addToList,
 } from "./helper.ts";
 import List from "./component/List.tsx";
 
@@ -40,6 +41,12 @@ function App() {
     setLocalStorage(storageThemeKey, darkmode);
   }, [darkmode]);
 
+  const handleAdd = function (e: React.KeyboardEvent<HTMLInputElement>) {
+    const target = e.target as HTMLInputElement;
+    if (e.key !== "Enter" || !target.value) return;
+    setData((prev) => addToList(prev, target.value));
+  };
+
   const handleRemove = function (id: number | null) {
     if (!id) return;
     setData((prev) => deleteFromList(prev, id));
@@ -69,6 +76,7 @@ function App() {
             className="h-full w-full rounded-xl border-transparent bg-transparent px-13 text-xsm"
             type="text"
             placeholder="Create a new todo..."
+            onKeyUp={handleAdd}
           />
         </div>
         <List
