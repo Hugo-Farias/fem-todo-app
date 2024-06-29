@@ -2,7 +2,7 @@ import cross from "../assets/icon-cross.svg";
 import checkbox from "../assets/icon-checkbox.svg";
 import checkmarked from "../assets/icon-checkmarked.svg";
 import { dataType } from "../App.tsx";
-import { AnimatePresence, Reorder } from "framer-motion";
+import { AnimatePresence, Reorder, motion } from "framer-motion";
 import React, { useState } from "react";
 
 type propT = {
@@ -12,6 +12,7 @@ type propT = {
   reorder: React.Dispatch<dataType>;
 };
 
+//TODO Find a solution to scroll on mobile conflicting with drag and drop
 function List({ data, remove, mark, reorder }: propT) {
   const [isDragState, setIsDragState] = useState<boolean>(false);
 
@@ -35,10 +36,11 @@ function List({ data, remove, mark, reorder }: propT) {
               if (isDragState) return;
               mark(v.id);
             }}
-            className="group flex h-12 items-center gap-3 bg-bkg transition-colors duration-200 first:rounded-t-xl last:rounded-b-xl hover:cursor-pointer"
+            // style={{ touchAction: "none" }}
+            className="group flex h-12 items-center gap-3 bg-bkg transition-colors first:rounded-t-md last:rounded-b-xl hover:cursor-pointer"
           >
             <img
-              className={`${v.marked || "opacity-50 grayscale"} pl-5 transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0`}
+              className={`${v.marked || "opacity-50 grayscale"} pl-5 group-hover:opacity-100 group-hover:grayscale-0`}
               src={v.marked ? checkmarked : checkbox}
               alt="check todo item"
             ></img>
@@ -48,7 +50,7 @@ function List({ data, remove, mark, reorder }: propT) {
               {v.name}
             </div>
             <button
-              className="group h-full w-12 transition-colors hover:bg-content/5 group-first:rounded-tr-xl group-last:rounded-br-xl"
+              className="group h-full w-12 hover:bg-content/5 group-first:rounded-tr-md"
               onClick={(e) => {
                 if (isDragState) return;
                 e.stopPropagation();
@@ -63,6 +65,15 @@ function List({ data, remove, mark, reorder }: propT) {
             </button>
           </Reorder.Item>
         ))}
+        <motion.div
+          layout
+          transition={{ duration: 0.1 }}
+          className="flex h-12 items-center rounded-b-md bg-bkg px-6 transition-colors first:rounded-t-md"
+        >
+          <div className="opacity-50">
+            {data.filter((v) => !v.marked).length} items left
+          </div>
+        </motion.div>
       </AnimatePresence>
     </Reorder.Group>
   );

@@ -2,7 +2,7 @@ import logo from "./assets/logo.svg";
 import sun from "./assets/icon-sun.svg";
 import moon from "./assets/icon-moon.svg";
 import checkbox from "./assets/icon-checkbox.svg";
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   getLocalStorage,
   setLocalStorage,
@@ -25,6 +25,7 @@ const dummy = [
 export type dataType = typeof dummy;
 
 function App() {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [data, setData] = useState<dataType>(dummy);
   const [darkmode, setDarkmode] = useState<boolean>(
     getLocalStorage(
@@ -41,10 +42,12 @@ function App() {
     setLocalStorage(storageThemeKey, darkmode);
   }, [darkmode]);
 
-  const handleAdd = function (e: React.KeyboardEvent<HTMLInputElement>) {
-    const target = e.target as HTMLInputElement;
-    if (e.key !== "Enter" || !target.value) return;
-    setData((prev) => addToList(prev, target.value));
+  const handleAdd = function () {
+    if (!inputRef.current) return;
+    const value = inputRef.current.value;
+    if (!value) return;
+    inputRef.current.value = "";
+    setData((prev) => addToList(prev, value));
   };
 
   const handleRemove = function (id: number | null) {
@@ -58,7 +61,7 @@ function App() {
   };
 
   return (
-    <div className="px-6 font-josefin text-xsm">
+    <div className="px-6 font-josefin text-xsm font-normal">
       <header className="my-12 flex h-5 flex-wrap justify-between">
         <img src={logo} alt="Todo App Logo" />
         <button onClick={() => setDarkmode((prev) => !prev)}>
@@ -66,17 +69,22 @@ function App() {
         </button>
       </header>
       <main>
-        <div className="relative mb-4 h-12 w-full rounded-xl bg-bkg text-xsm text-content shadow-xl transition-colors duration-200">
+        <div className="relative mb-4 h-12 w-full rounded-md bg-bkg text-xsm text-content shadow-xl transition-colors duration-200">
           <img
             className="absolute left-5 top-1/2 -translate-y-1/2 opacity-50 grayscale"
             src={checkbox}
             alt=""
+            onClick={handleAdd}
           />
           <input
-            className="h-full w-full rounded-xl border-transparent bg-transparent px-13 text-xsm"
+            className="h-full w-full rounded-md border-transparent bg-transparent px-13 text-xsm"
             type="text"
             placeholder="Create a new todo..."
-            onKeyUp={handleAdd}
+            ref={inputRef}
+            onKeyDown={(e) => {
+              if (e.key !== "Enter") return;
+              return handleAdd();
+            }}
           />
         </div>
         <List
