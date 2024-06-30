@@ -30,8 +30,9 @@ function List({ data, remove, mark, reorder }: propT) {
             onDragEnd={() => setIsDragState(false)}
             value={v}
             key={v.id}
+            dragTransition={{ bounceStiffness: 1000, bounceDamping: 40 }}
             transition={{ duration: 0.1 }}
-            exit={{ scale: 0.9, x: "30%", opacity: 0 }}
+            exit={{ opacity: 0, translate: "50%" }}
             onClick={() => {
               if (isDragState) return;
               mark(v.id);
@@ -51,8 +52,8 @@ function List({ data, remove, mark, reorder }: propT) {
             <button
               className="group h-full w-12 hover:bg-content/5 group-first:rounded-tr-md"
               onClick={(e) => {
-                if (isDragState) return;
                 e.stopPropagation();
+                if (isDragState) return;
                 remove(v.id);
               }}
             >
@@ -67,7 +68,7 @@ function List({ data, remove, mark, reorder }: propT) {
         <motion.div
           layout
           transition={{ duration: 0.1 }}
-          className="flex h-12 items-center rounded-b-md bg-bkg px-6 transition-colors first:rounded-t-md"
+          className="-z-10 flex h-12 items-center rounded-b-md bg-bkg px-6 transition-colors first:rounded-t-md"
         >
           <div className="opacity-50">
             {data.filter((v) => !v.marked).length} items left
