@@ -2,7 +2,7 @@ import logo from "./assets/logo.svg";
 import sun from "./assets/icon-sun.svg";
 import moon from "./assets/icon-moon.svg";
 import checkbox from "./assets/icon-checkbox.svg";
-import { useEffect, useRef, useState } from "react";
+import { ElementRef, useEffect, useRef, useState } from "react";
 import {
   getLocalStorage,
   setLocalStorage,
@@ -25,7 +25,7 @@ const dummy = [
 export type dataType = typeof dummy;
 
 function App() {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<ElementRef<"input">>(null);
   const [data, setData] = useState<dataType>(dummy);
   const [darkmode, setDarkmode] = useState<boolean>(
     getLocalStorage(

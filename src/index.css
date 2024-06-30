@@ -9,7 +9,8 @@
 
     /*font-size: 10px;*/
 
-    transition: background-image 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    transition-property: background-image, background-color;
     background-repeat: no-repeat;
     background-size: contain;
     min-height: 341px;

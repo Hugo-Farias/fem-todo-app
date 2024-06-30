@@ -36,7 +36,6 @@ function List({ data, remove, mark, reorder }: propT) {
               if (isDragState) return;
               mark(v.id);
             }}
-            // style={{ touchAction: "none" }}
             className="group flex h-12 items-center gap-3 bg-bkg transition-colors first:rounded-t-md last:rounded-b-xl hover:cursor-pointer"
           >
             <img
