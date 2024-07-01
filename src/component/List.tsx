@@ -30,9 +30,9 @@ function List({ data, remove, mark, reorder }: propT) {
             onDragEnd={() => setIsDragState(false)}
             value={v}
             key={v.id}
-            dragTransition={{ bounceStiffness: 1000, bounceDamping: 40 }}
-            transition={{ duration: 0.1 }}
-            exit={{ opacity: 0, translate: "50%" }}
+            dragTransition={{ bounceStiffness: 400, bounceDamping: 40 }}
+            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, translate: "20%" }}
             onClick={() => {
               if (isDragState) return;
               mark(v.id);
