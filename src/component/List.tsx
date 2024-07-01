@@ -1,21 +1,20 @@
-import cross from "../assets/icon-cross.svg";
-import checkbox from "../assets/icon-checkbox.svg";
-import checkmarked from "../assets/icon-checkmarked.svg";
 import { dataType } from "../App.tsx";
 import { AnimatePresence, Reorder, motion } from "framer-motion";
-import React, { useState } from "react";
+import React from "react";
+import ListItem from "./ListItem.tsx";
 
-type propT = {
+export type baseItemProp = {
+  remove: (id: number) => void;
+  mark: (id: number) => void;
+};
+
+type propT = baseItemProp & {
   data: dataType;
-  remove: (_: number) => void;
-  mark: (_: number) => void;
   reorder: React.Dispatch<dataType>;
 };
 
 //TODO Find a solution to scroll on mobile conflicting with drag and drop
 function List({ data, remove, mark, reorder }: propT) {
-  const [isDragState, setIsDragState] = useState<boolean>(false);
-
   return (
     <Reorder.Group
       axis="y"
@@ -25,45 +24,7 @@ function List({ data, remove, mark, reorder }: propT) {
     >
       <AnimatePresence>
         {data.map((v) => (
-          <Reorder.Item
-            onDragStart={() => setIsDragState(true)}
-            onDragEnd={() => setIsDragState(false)}
-            value={v}
-            key={v.id}
-            dragTransition={{ bounceStiffness: 400, bounceDamping: 40 }}
-            transition={{ duration: 0.2 }}
-            exit={{ opacity: 0, translate: "20%" }}
-            onClick={() => {
-              if (isDragState) return;
-              mark(v.id);
-            }}
-            className="group flex h-12 items-center gap-3 bg-bkg transition-colors first:rounded-t-md last:rounded-b-xl hover:cursor-pointer"
-          >
-            <img
-              className={`${v.marked || "opacity-50 grayscale"} pl-5 group-hover:opacity-100 group-hover:grayscale-0`}
-              src={v.marked ? checkmarked : checkbox}
-              alt="check todo item"
-            ></img>
-            <div
-              className={`${v.marked && "line-through opacity-50"} flex h-full flex-grow items-center`}
-            >
-              {v.name}
-            </div>
-            <button
-              className="group h-full w-12 hover:bg-content/5 group-first:rounded-tr-md"
-              onClick={(e) => {
-                e.stopPropagation();
-                if (isDragState) return;
-                remove(v.id);
-              }}
-            >
-              <img
-                className="mx-auto size-3"
-                src={cross}
-                alt="Remove from list"
-              />
-            </button>
-          </Reorder.Item>
+          <ListItem key={v.id} data={v} remove={remove} mark={mark} />
         ))}
         <motion.div
           layout
