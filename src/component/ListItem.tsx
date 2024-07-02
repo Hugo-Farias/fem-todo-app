@@ -32,7 +32,7 @@ function ListItem({ data, remove, mark }: propT) {
         if (isDragState) return;
         mark(data.id);
       }}
-      className="group flex h-12 select-none items-center gap-3 bg-bkg transition-colors first:rounded-t-md last:rounded-b-xl hover:cursor-pointer"
+      className="group z-20 flex h-12 select-none items-center gap-3 bg-bkg transition-colors first:rounded-t-md last:rounded-b-xl hover:cursor-pointer"
     >
       <img
         className={`${data.marked || "opacity-50 grayscale"} touch-none py-2 pl-5 group-hover:opacity-100 group-hover:grayscale-0`}
