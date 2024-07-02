@@ -11,7 +11,8 @@ import {
   toggleFromList,
   addToList,
 } from "./helper.ts";
-import List from "./component/List.tsx";
+import { AnimatePresence, motion, Reorder } from "framer-motion";
+import ListItem from "./component/ListItem.tsx";
 
 const dummy = [
   { id: 1, name: "Complete online JavaScript course", marked: true },
@@ -87,12 +88,32 @@ function App() {
             }}
           />
         </div>
-        <List
-          data={data}
-          remove={handleRemove}
-          mark={handleMark}
-          reorder={setData}
-        />
+        <Reorder.Group
+          axis="y"
+          values={data}
+          onReorder={setData}
+          className="w-full divide-y divide-content/20 text-content drop-shadow-xl"
+        >
+          <AnimatePresence>
+            {data.map((v) => (
+              <ListItem
+                key={v.id}
+                data={v}
+                remove={handleRemove}
+                mark={handleMark}
+              />
+            ))}
+            <motion.div
+              layout
+              transition={{ duration: 0.1 }}
+              className="-z-10 flex h-12 items-center rounded-b-md bg-bkg px-6 transition-colors first:rounded-t-md"
+            >
+              <div className="opacity-50">
+                {data.filter((v) => !v.marked).length} items left
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </Reorder.Group>
       </main>
     </div>
   );

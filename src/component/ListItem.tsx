@@ -5,10 +5,11 @@ import { Reorder, useDragControls } from "framer-motion";
 import { dataType } from "../App.tsx";
 import { useState } from "react";
 import useInputType from "../hooks/useInputType.ts";
-import { baseItemProp } from "./List.tsx";
 
-type propT = baseItemProp & {
+type propT = {
   data: dataType[number];
+  remove: (id: number) => void;
+  mark: (id: number) => void;
 };
 
 function ListItem({ data, remove, mark }: propT) {
