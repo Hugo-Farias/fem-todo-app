@@ -13,7 +13,6 @@ type propT = baseItemProp & {
   reorder: React.Dispatch<dataType>;
 };
 
-//TODO Find a solution to scroll on mobile conflicting with drag and drop
 function List({ data, remove, mark, reorder }: propT) {
   return (
     <Reorder.Group
