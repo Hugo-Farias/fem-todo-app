@@ -11,8 +11,9 @@ import {
   toggleFromList,
   addToList,
 } from "./helper.ts";
-import { AnimatePresence, motion, Reorder } from "framer-motion";
+import { AnimatePresence, Reorder } from "framer-motion";
 import ListItem from "./component/ListItem.tsx";
+import Filter from "./component/Filter.tsx";
 
 const dummy = [
   { id: 1, name: "Complete online JavaScript course", marked: true },
@@ -65,12 +66,12 @@ function App() {
     setData((prev) => addToList(prev, value));
   };
 
-  const handleRemove = function (id: number | null) {
+  const handleRemove = function (id: number) {
     if (!id) return;
     setData((prev) => deleteFromList(prev, id));
   };
 
-  const handleMark = function (id: number | null) {
+  const handleMark = function (id: number) {
     if (!id) return;
     setData((prev) => toggleFromList(prev, id));
   };
@@ -117,17 +118,17 @@ function App() {
                 mark={handleMark}
               />
             ))}
-            <motion.div
-              layout
-              transition={{ duration: 0.1 }}
-              className="flex h-12 items-center rounded-b-md bg-bkg px-6 transition-colors first:rounded-t-md"
-            >
-              <div className="opacity-50">
-                {data.filter((v) => !v.marked).length} items left
-              </div>
-            </motion.div>
           </AnimatePresence>
+          <div className="mb-4 flex h-12 items-center rounded-b-md bg-bkg px-6 transition-colors first:rounded-t-md">
+            <div className="flex w-full justify-between opacity-50">
+              <span>{data.filter((v) => !v.marked).length} items left</span>
+              <button>Clear Completed</button>
+            </div>
+          </div>
         </Reorder.Group>
+        <div className="h-12 rounded-md bg-bkg">
+          <Filter />
+        </div>
       </main>
     </div>
   );
