@@ -18,6 +18,7 @@ export default {
         },
         bkg: "hsl(var(--bkg) / <alpha-value>)",
         content: "hsl(var(--content) / <alpha-value>)",
+        hover: "hsl(220, 98%, 61%)",
       },
       fontFamily: { josefin: ['"Josefin sans"', "serif"] },
     },

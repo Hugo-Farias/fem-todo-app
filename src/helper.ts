@@ -29,3 +29,7 @@ export const toggleFromList = function (list: dataType, id: number): dataType {
 export const deleteFromList = function (list: dataType, id: number): dataType {
   return list.filter((v) => id !== v.id);
 };
+
+export const clearList = function (list: dataType): dataType {
+  return list.filter((v) => !v.marked);
+};

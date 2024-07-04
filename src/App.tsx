@@ -10,8 +10,9 @@ import {
   deleteFromList,
   toggleFromList,
   addToList,
+  clearList,
 } from "./helper.ts";
-import { AnimatePresence, Reorder } from "framer-motion";
+import { AnimatePresence, Reorder, motion } from "framer-motion";
 import ListItem from "./component/ListItem.tsx";
 import Filter from "./component/Filter.tsx";
 
@@ -66,16 +67,6 @@ function App() {
     setData((prev) => addToList(prev, value));
   };
 
-  const handleRemove = function (id: number) {
-    if (!id) return;
-    setData((prev) => deleteFromList(prev, id));
-  };
-
-  const handleMark = function (id: number) {
-    if (!id) return;
-    setData((prev) => toggleFromList(prev, id));
-  };
-
   return (
     <div className="px-6 font-josefin text-xsm font-normal">
       <header className="my-12 flex h-5 flex-wrap justify-between">
@@ -114,22 +105,40 @@ function App() {
               <ListItem
                 key={v.id}
                 data={v}
-                remove={handleRemove}
-                mark={handleMark}
+                remove={(id) => {
+                  if (!id) return;
+                  setData((prev) => deleteFromList(prev, id));
+                }}
+                mark={(id) => {
+                  if (!id) return;
+                  setData((prev) => toggleFromList(prev, id));
+                }}
               />
             ))}
+            <motion.div
+              layout
+              transition={{ duration: 0.2 }}
+              className="mb-4 flex h-12 items-center rounded-b-md bg-bkg px-6 transition-colors first:rounded-t-md"
+            >
+              <div className="flex w-full justify-between text-content/50">
+                <div className="text-inherit">
+                  {data.filter((v) => !v.marked).length} items left
+                </div>
+                <button
+                  className="hover:text-content"
+                  onClick={() => setData((prev) => clearList(prev))}
+                >
+                  Clear Completed
+                </button>
+              </div>
+            </motion.div>
           </AnimatePresence>
-          <div className="mb-4 flex h-12 items-center rounded-b-md bg-bkg px-6 transition-colors first:rounded-t-md">
-            <div className="flex w-full justify-between opacity-50">
-              <span>{data.filter((v) => !v.marked).length} items left</span>
-              <button>Clear Completed</button>
-            </div>
-          </div>
         </Reorder.Group>
-        <div className="h-12 rounded-md bg-bkg">
-          <Filter />
-        </div>
       </main>
+      //TODO Debug background color not being rendered in light mode.
+      <div className="h-12 rounded-md bg-bkg">
+        <Filter />
+      </div>
     </div>
   );
 }
