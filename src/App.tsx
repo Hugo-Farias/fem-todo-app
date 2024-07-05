@@ -83,10 +83,10 @@ function App() {
       <main className="mb-10">
         <div className="relative mb-4 h-12 w-full rounded-md bg-bkg text-content shadow-xl transition-colors duration-200 md:h-16">
           <img
-            className="absolute left-5 top-1/2 -translate-y-1/2 opacity-50 grayscale"
+            className="absolute left-5 top-1/2 -translate-y-1/2 opacity-50 grayscale hover:cursor-pointer"
             src={checkbox}
             alt=""
-            onClick={handleAdd}
+            onClick={() => handleAdd()}
           />
           <input
             className="h-full w-full rounded-md border-transparent bg-transparent px-13 text-xs md:text-base"
@@ -134,7 +134,7 @@ function App() {
                 <div className="text-inherit">
                   {data.filter((v) => !v.marked).length} items left
                 </div>
-                <div className="hidden md:block">
+                <div className="hidden sm:block">
                   <Filter filter={(t) => setFilter(t)} active={filter} />
                 </div>
                 <button
@@ -148,7 +148,7 @@ function App() {
           </AnimatePresence>
         </Reorder.Group>
       </main>
-      <div className="h-12 rounded-md bg-bkg shadow-xl md:hidden">
+      <div className="h-12 rounded-md bg-bkg shadow-xl sm:hidden">
         <Filter filter={(t) => setFilter(t)} active={filter} />
       </div>
       <footer className="mt-10 flex select-none justify-center text-sm text-content/40">
