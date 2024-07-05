@@ -22,27 +22,15 @@ const dummy = [
   { id: 3, name: "10 minutes meditation", marked: false },
   { id: 4, name: "Read for 1 hour", marked: false },
   { id: 5, name: "Pick up groceries", marked: false },
-  { id: 6, name: "Complete Todo App on Frontend Mentor", marked: false },
-  { id: 7, name: "Clean the house", marked: false },
-  { id: 8, name: "Finish homework", marked: false },
-  { id: 9, name: "Work on side project", marked: false },
-  { id: 10, name: "Practice guitar", marked: false },
-  { id: 11, name: "Prepare dinner", marked: false },
-  { id: 12, name: "Watch a movie", marked: false },
-  { id: 13, name: "Call mom", marked: false },
-  { id: 14, name: "Plan weekend trip", marked: false },
-  { id: 15, name: "Water the plants", marked: false },
-  { id: 16, name: "Exercise for 30 minutes", marked: false },
-  { id: 17, name: "Write in journal", marked: false },
-  { id: 18, name: "Read news articles", marked: false },
-  { id: 19, name: "Organize desk", marked: false },
-  { id: 20, name: "Update resume", marked: false },
 ];
 
 export type dataType = typeof dummy;
 
+export type filterT = "all" | "active" | "completed";
+
 function App() {
   const inputRef = useRef<ElementRef<"input">>(null);
+  const [filter, setFilter] = useState<filterT>("all");
   const [data, setData] = useState<dataType>(dummy);
   const [darkmode, setDarkmode] = useState<boolean>(
     getLocalStorage(
@@ -101,20 +89,25 @@ function App() {
           className="w-full divide-y divide-content/20 text-content drop-shadow-xl"
         >
           <AnimatePresence>
-            {data.map((v) => (
-              <ListItem
-                key={v.id}
-                data={v}
-                remove={(id) => {
-                  if (!id) return;
-                  setData((prev) => deleteFromList(prev, id));
-                }}
-                mark={(id) => {
-                  if (!id) return;
-                  setData((prev) => toggleFromList(prev, id));
-                }}
-              />
-            ))}
+            {data.map((v) => {
+              if (filter === "active" && v.marked) return;
+              if (filter === "completed" && !v.marked) return;
+
+              return (
+                <ListItem
+                  key={v.id}
+                  data={v}
+                  remove={(id) => {
+                    if (!id) return;
+                    setData((prev) => deleteFromList(prev, id));
+                  }}
+                  mark={(id) => {
+                    if (!id) return;
+                    setData((prev) => toggleFromList(prev, id));
+                  }}
+                />
+              );
+            })}
             <motion.div
               layout
               transition={{ duration: 0.2 }}
@@ -135,9 +128,8 @@ function App() {
           </AnimatePresence>
         </Reorder.Group>
       </main>
-      //TODO Debug background color not being rendered in light mode.
-      <div className="h-12 rounded-md bg-bkg">
-        <Filter />
+      <div className="h-12 rounded-md bg-bkg shadow-xl">
+        <Filter filter={(t) => setFilter(t)} active={filter} />
       </div>
     </div>
   );
