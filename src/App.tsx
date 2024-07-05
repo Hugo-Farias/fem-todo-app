@@ -56,8 +56,6 @@ function App() {
     ),
   );
 
-  console.log(inputType);
-
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
@@ -75,7 +73,7 @@ function App() {
   };
 
   return (
-    <div className="min-w-[320px] px-6 font-josefin text-xs font-normal">
+    <div className="min-w-[320px] px-6 pb-10 font-josefin text-xs font-normal md:text-base">
       <header className="my-12 flex h-5 flex-wrap justify-between">
         <img src={logo} alt="Todo App Logo" />
         <button onClick={() => setDarkmode((prev) => !prev)}>
@@ -83,7 +81,7 @@ function App() {
         </button>
       </header>
       <main className="mb-10">
-        <div className="relative mb-4 h-12 w-full rounded-md bg-bkg text-xs text-content shadow-xl transition-colors duration-200">
+        <div className="relative mb-4 h-12 w-full rounded-md bg-bkg text-content shadow-xl transition-colors duration-200 md:h-16">
           <img
             className="absolute left-5 top-1/2 -translate-y-1/2 opacity-50 grayscale"
             src={checkbox}
@@ -91,7 +89,7 @@ function App() {
             onClick={handleAdd}
           />
           <input
-            className="h-full w-full rounded-md border-transparent bg-transparent px-13 text-xs"
+            className="h-full w-full rounded-md border-transparent bg-transparent px-13 text-xs md:text-base"
             type="text"
             placeholder="Create a new todo..."
             ref={textInputRef}
@@ -130,11 +128,14 @@ function App() {
             <motion.div
               layout
               transition={{ duration: 0.2 }}
-              className="mb-4 flex h-12 items-center rounded-b-md bg-bkg px-6 transition-colors first:rounded-t-md"
+              className="flex h-12 items-center rounded-b-md bg-bkg px-6 transition-colors md:h-16"
             >
-              <div className="flex w-full justify-between text-content/50">
+              <div className="flex w-full items-center justify-between text-content/50">
                 <div className="text-inherit">
                   {data.filter((v) => !v.marked).length} items left
+                </div>
+                <div className="hidden md:block">
+                  <Filter filter={(t) => setFilter(t)} active={filter} />
                 </div>
                 <button
                   className="hover:text-content"
@@ -147,10 +148,10 @@ function App() {
           </AnimatePresence>
         </Reorder.Group>
       </main>
-      <div className="h-12 rounded-md bg-bkg shadow-xl">
+      <div className="h-12 rounded-md bg-bkg shadow-xl md:hidden">
         <Filter filter={(t) => setFilter(t)} active={filter} />
       </div>
-      <footer className="mt-10 flex select-none justify-center pb-20 text-sm text-content/40">
+      <footer className="mt-10 flex select-none justify-center text-sm text-content/40">
         {`Drag and drop ${inputType === "touch" ? "the left side" : ""} to reorder list`}
       </footer>
     </div>

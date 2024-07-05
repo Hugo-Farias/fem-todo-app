@@ -32,7 +32,7 @@ function ListItem({ data, remove, mark }: propT) {
         if (isDragState) return;
         mark(data.id);
       }}
-      className="group relative flex h-12 select-none items-center gap-3 bg-bkg transition-colors first:rounded-t-md last:rounded-b-xl hover:cursor-pointer"
+      className="group relative flex h-12 select-none items-center gap-3 bg-bkg transition-colors first:rounded-t-md last:rounded-b-xl hover:cursor-pointer md:h-16"
     >
       <img
         className={`${data.marked || "opacity-50 grayscale"} touch-none py-2 pl-5 group-hover:opacity-100 group-hover:grayscale-0`}
@@ -48,7 +48,7 @@ function ListItem({ data, remove, mark }: propT) {
         {data.name}
       </div>
       <button
-        className="group h-full w-12 hover:bg-content/5 group-first:rounded-tr-md"
+        className={`${inputType === "mouse" && "invisible group-hover:visible"} "group aspect-square h-full hover:bg-content/5 group-first:rounded-tr-md`}
         onClick={(e) => {
           e.stopPropagation();
           if (isDragState) return;

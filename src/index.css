@@ -38,7 +38,7 @@
 
     &[data-theme="dark"] {
       --bkg: 235deg 24% 19%;
-      --content: 0deg 0% 100%;
+      --content: 234deg 39% 85%;
       background-image: url("./assets/bg-mobile-dark.jpg");
       background-color: #171823;
 
