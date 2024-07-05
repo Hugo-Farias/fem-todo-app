@@ -75,7 +75,7 @@ function App() {
   };
 
   return (
-    <div className="min-w-[320px] px-6 font-josefin text-xsm font-normal">
+    <div className="min-w-[320px] px-6 font-josefin text-xs font-normal">
       <header className="my-12 flex h-5 flex-wrap justify-between">
         <img src={logo} alt="Todo App Logo" />
         <button onClick={() => setDarkmode((prev) => !prev)}>
@@ -83,7 +83,7 @@ function App() {
         </button>
       </header>
       <main className="mb-10">
-        <div className="relative mb-4 h-12 w-full rounded-md bg-bkg text-xsm text-content shadow-xl transition-colors duration-200">
+        <div className="relative mb-4 h-12 w-full rounded-md bg-bkg text-xs text-content shadow-xl transition-colors duration-200">
           <img
             className="absolute left-5 top-1/2 -translate-y-1/2 opacity-50 grayscale"
             src={checkbox}
@@ -91,7 +91,7 @@ function App() {
             onClick={handleAdd}
           />
           <input
-            className="h-full w-full rounded-md border-transparent bg-transparent px-13 text-xsm"
+            className="h-full w-full rounded-md border-transparent bg-transparent px-13 text-xs"
             type="text"
             placeholder="Create a new todo..."
             ref={textInputRef}

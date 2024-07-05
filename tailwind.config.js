@@ -5,9 +5,6 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      fontSize: {
-        xsm: "0.75rem", // 12px
-      },
       spacing: {
         13: "3.25rem", // 52px
       },
