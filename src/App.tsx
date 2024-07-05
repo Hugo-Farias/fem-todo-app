@@ -15,6 +15,7 @@ import {
 import { AnimatePresence, Reorder, motion } from "framer-motion";
 import ListItem from "./component/ListItem.tsx";
 import Filter from "./component/Filter.tsx";
+import useInputType from "./hooks/useInputType.ts";
 
 const dummy = [
   { id: 1, name: "Complete online JavaScript course", marked: true },
@@ -22,6 +23,21 @@ const dummy = [
   { id: 3, name: "10 minutes meditation", marked: false },
   { id: 4, name: "Read for 1 hour", marked: false },
   { id: 5, name: "Pick up groceries", marked: false },
+  { id: 6, name: "Complete Todo App on Frontend Mentor", marked: false },
+  { id: 7, name: "Clean the house", marked: false },
+  { id: 8, name: "Finish homework", marked: false },
+  { id: 9, name: "Work on side project", marked: false },
+  { id: 10, name: "Practice guitar", marked: false },
+  { id: 11, name: "Prepare dinner", marked: false },
+  { id: 12, name: "Watch a movie", marked: false },
+  { id: 13, name: "Call mom", marked: false },
+  { id: 14, name: "Plan weekend trip", marked: false },
+  { id: 15, name: "Water the plants", marked: false },
+  { id: 16, name: "Exercise for 30 minutes", marked: false },
+  { id: 17, name: "Write in journal", marked: false },
+  { id: 18, name: "Read news articles", marked: false },
+  { id: 19, name: "Organize desk", marked: false },
+  { id: 20, name: "Update resume", marked: false },
 ];
 
 export type dataType = typeof dummy;
@@ -29,7 +45,8 @@ export type dataType = typeof dummy;
 export type filterT = "all" | "active" | "completed";
 
 function App() {
-  const inputRef = useRef<ElementRef<"input">>(null);
+  const inputType = useInputType();
+  const textInputRef = useRef<ElementRef<"input">>(null);
   const [filter, setFilter] = useState<filterT>("all");
   const [data, setData] = useState<dataType>(dummy);
   const [darkmode, setDarkmode] = useState<boolean>(
@@ -38,6 +55,8 @@ function App() {
       window.matchMedia("(prefers-color-scheme: dark)").matches,
     ),
   );
+
+  console.log(inputType);
 
   useEffect(() => {
     document.documentElement.setAttribute(
@@ -48,15 +67,15 @@ function App() {
   }, [darkmode]);
 
   const handleAdd = function () {
-    if (!inputRef.current) return;
-    const value = inputRef.current.value;
+    if (!textInputRef.current) return;
+    const value = textInputRef.current.value;
     if (!value) return;
-    inputRef.current.value = "";
+    textInputRef.current.value = "";
     setData((prev) => addToList(prev, value));
   };
 
   return (
-    <div className="px-6 font-josefin text-xsm font-normal">
+    <div className="min-w-[320px] px-6 font-josefin text-xsm font-normal">
       <header className="my-12 flex h-5 flex-wrap justify-between">
         <img src={logo} alt="Todo App Logo" />
         <button onClick={() => setDarkmode((prev) => !prev)}>
@@ -75,7 +94,7 @@ function App() {
             className="h-full w-full rounded-md border-transparent bg-transparent px-13 text-xsm"
             type="text"
             placeholder="Create a new todo..."
-            ref={inputRef}
+            ref={textInputRef}
             onKeyDown={(e) => {
               if (e.key !== "Enter") return;
               return handleAdd();
@@ -131,6 +150,9 @@ function App() {
       <div className="h-12 rounded-md bg-bkg shadow-xl">
         <Filter filter={(t) => setFilter(t)} active={filter} />
       </div>
+      <footer className="mt-10 flex select-none justify-center pb-20 text-sm text-content/40">
+        {`Drag and drop ${inputType === "touch" ? "the left side" : ""} to reorder list`}
+      </footer>
     </div>
   );
 }
