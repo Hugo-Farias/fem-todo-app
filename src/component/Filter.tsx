@@ -11,7 +11,7 @@ const Filter = function ({ filter, active }: propT) {
   };
 
   return (
-    <div className="flex h-full items-center justify-center gap-5 text-sm font-bold text-content/40 md:text-lg">
+    <div className="flex h-full items-center justify-center gap-5 font-bold text-content/40">
       <button
         className={`${active === "all" && "text-hover"} hover:text-hover`}
         onClick={() => handleClick("all")}

@@ -73,87 +73,89 @@ function App() {
   };
 
   return (
-    <div className="min-w-[320px] px-6 pb-10 font-josefin text-xs font-normal md:text-base">
-      <header className="my-12 flex h-5 flex-wrap justify-between">
-        <img src={logo} alt="Todo App Logo" />
-        <button onClick={() => setDarkmode((prev) => !prev)}>
-          <img src={darkmode ? sun : moon} alt="Toggle theme mode" />
-        </button>
-      </header>
-      <main className="mb-10">
-        <div className="relative mb-4 h-12 w-full rounded-md bg-bkg text-content shadow-xl transition-colors duration-200 md:h-16">
-          <img
-            className="absolute left-5 top-1/2 -translate-y-1/2 opacity-50 grayscale hover:cursor-pointer"
-            src={checkbox}
-            alt=""
-            onClick={() => handleAdd()}
-          />
-          <input
-            className="h-full w-full rounded-md border-transparent bg-transparent px-13 text-xs md:text-base"
-            type="text"
-            placeholder="Create a new todo..."
-            ref={textInputRef}
-            onKeyDown={(e) => {
-              if (e.key !== "Enter") return;
-              return handleAdd();
-            }}
-          />
-        </div>
-        <Reorder.Group
-          axis="y"
-          values={data}
-          onReorder={setData}
-          className="w-full divide-y divide-content/20 text-content drop-shadow-xl"
-        >
-          <AnimatePresence>
-            {data.map((v) => {
-              if (filter === "active" && v.marked) return;
-              if (filter === "completed" && !v.marked) return;
+    <div className="px-6 pb-10 font-josefin text-xs font-normal md:text-base">
+      <div className="mx-auto max-w-[540px]">
+        <header className="my-12 flex h-5 flex-wrap justify-between">
+          <img src={logo} alt="Todo App Logo" />
+          <button onClick={() => setDarkmode((prev) => !prev)}>
+            <img src={darkmode ? sun : moon} alt="Toggle theme mode" />
+          </button>
+        </header>
+        <main className="mb-10">
+          <div className="relative mb-4 h-12 w-full rounded-md bg-bkg text-content shadow-xl transition-colors duration-200 md:h-16">
+            <img
+              className="absolute left-5 top-1/2 -translate-y-1/2 opacity-50 grayscale hover:cursor-pointer"
+              src={checkbox}
+              alt=""
+              onClick={() => handleAdd()}
+            />
+            <input
+              className="h-full w-full rounded-md border-transparent bg-transparent px-13 text-xs md:text-base"
+              type="text"
+              placeholder="Create a new todo..."
+              ref={textInputRef}
+              onKeyDown={(e) => {
+                if (e.key !== "Enter") return;
+                return handleAdd();
+              }}
+            />
+          </div>
+          <Reorder.Group
+            axis="y"
+            values={data}
+            onReorder={setData}
+            className="w-full divide-y divide-content/20 text-content drop-shadow-xl"
+          >
+            <AnimatePresence>
+              {data.map((v) => {
+                if (filter === "active" && v.marked) return;
+                if (filter === "completed" && !v.marked) return;
 
-              return (
-                <ListItem
-                  key={v.id}
-                  data={v}
-                  remove={(id) => {
-                    if (!id) return;
-                    setData((prev) => deleteFromList(prev, id));
-                  }}
-                  mark={(id) => {
-                    if (!id) return;
-                    setData((prev) => toggleFromList(prev, id));
-                  }}
-                />
-              );
-            })}
-            <motion.div
-              layout
-              transition={{ duration: 0.2 }}
-              className="flex h-12 items-center rounded-b-md bg-bkg px-6 transition-colors md:h-16"
-            >
-              <div className="flex w-full items-center justify-between text-content/50">
-                <div className="text-inherit">
-                  {data.filter((v) => !v.marked).length} items left
+                return (
+                  <ListItem
+                    key={v.id}
+                    data={v}
+                    remove={(id) => {
+                      if (!id) return;
+                      setData((prev) => deleteFromList(prev, id));
+                    }}
+                    mark={(id) => {
+                      if (!id) return;
+                      setData((prev) => toggleFromList(prev, id));
+                    }}
+                  />
+                );
+              })}
+              <motion.div
+                layout
+                transition={{ duration: 0.2 }}
+                className="flex h-12 items-center rounded-b-md bg-bkg px-6 transition-colors md:h-16"
+              >
+                <div className="flex w-full items-center justify-between text-content/50">
+                  <div className="">
+                    {data.filter((v) => !v.marked).length} items left
+                  </div>
+                  <div className="hidden sm:block">
+                    <Filter filter={(t) => setFilter(t)} active={filter} />
+                  </div>
+                  <button
+                    className="hover:text-content"
+                    onClick={() => setData((prev) => clearList(prev))}
+                  >
+                    Clear Completed
+                  </button>
                 </div>
-                <div className="hidden sm:block">
-                  <Filter filter={(t) => setFilter(t)} active={filter} />
-                </div>
-                <button
-                  className="hover:text-content"
-                  onClick={() => setData((prev) => clearList(prev))}
-                >
-                  Clear Completed
-                </button>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </Reorder.Group>
-      </main>
-      <div className="h-12 rounded-md bg-bkg shadow-xl sm:hidden">
-        <Filter filter={(t) => setFilter(t)} active={filter} />
+              </motion.div>
+            </AnimatePresence>
+          </Reorder.Group>
+        </main>
+        <div className="h-12 rounded-md bg-bkg shadow-xl sm:hidden">
+          <Filter filter={(t) => setFilter(t)} active={filter} />
+        </div>
+        <footer className="mt-10 flex select-none justify-center text-sm text-content/40">
+          {`Drag and drop ${inputType === "touch" ? "the left side" : ""} to reorder list`}
+        </footer>
       </div>
-      <footer className="mt-10 flex select-none justify-center text-sm text-content/40">
-        {`Drag and drop ${inputType === "touch" ? "the left side" : ""} to reorder list`}
-      </footer>
     </div>
   );
 }
