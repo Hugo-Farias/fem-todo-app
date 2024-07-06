@@ -1,14 +1,15 @@
 import { dataType } from "./App.tsx";
 
 export const storageThemeKey = "darkMode";
+export const storageListKey = "list";
 
 // Set value in localStorage
-export const setLocalStorage = (key: string, value: boolean) => {
+export const setLocalStorage = <T>(key: string, value: T) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
 
 // Get value from localStorage
-export const getLocalStorage = (key: string, fallback: boolean) => {
+export const getLocalStorage = <T>(key: string, fallback: T) => {
   const storedValue = localStorage.getItem(key);
   if (!storedValue) {
     return fallback;

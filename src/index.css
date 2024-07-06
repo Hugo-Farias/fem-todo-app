@@ -13,17 +13,6 @@
     transition-property: background-image, background-color;
     background-repeat: no-repeat;
     background-size: contain;
-    min-height: 341px;
-    max-height: 341px;
-
-    @media (min-width: 640px) {
-      min-height: 400px;
-      max-height: unset;
-    }
-
-    @media (min-width: 1921px) {
-      background-size: cover;
-    }
 
     &[data-theme="light"] {
       --bkg: 0 0% 100%;

@@ -11,6 +11,7 @@ import {
   toggleFromList,
   addToList,
   clearList,
+  storageListKey,
 } from "./helper.ts";
 import { AnimatePresence, Reorder, motion } from "framer-motion";
 import ListItem from "./component/ListItem.tsx";
@@ -24,20 +25,6 @@ const dummy = [
   { id: 4, name: "Read for 1 hour", marked: false },
   { id: 5, name: "Pick up groceries", marked: false },
   { id: 6, name: "Complete Todo App on Frontend Mentor", marked: false },
-  { id: 7, name: "Clean the house", marked: false },
-  { id: 8, name: "Finish homework", marked: false },
-  { id: 9, name: "Work on side project", marked: false },
-  { id: 10, name: "Practice guitar", marked: false },
-  { id: 11, name: "Prepare dinner", marked: false },
-  { id: 12, name: "Watch a movie", marked: false },
-  { id: 13, name: "Call mom", marked: false },
-  { id: 14, name: "Plan weekend trip", marked: false },
-  { id: 15, name: "Water the plants", marked: false },
-  { id: 16, name: "Exercise for 30 minutes", marked: false },
-  { id: 17, name: "Write in journal", marked: false },
-  { id: 18, name: "Read news articles", marked: false },
-  { id: 19, name: "Organize desk", marked: false },
-  { id: 20, name: "Update resume", marked: false },
 ];
 
 export type dataType = typeof dummy;
@@ -48,7 +35,9 @@ function App() {
   const inputType = useInputType();
   const textInputRef = useRef<ElementRef<"input">>(null);
   const [filter, setFilter] = useState<filterT>("all");
-  const [data, setData] = useState<dataType>(dummy);
+  const [data, setData] = useState<dataType>(
+    getLocalStorage(storageListKey, dummy),
+  );
   const [darkmode, setDarkmode] = useState<boolean>(
     getLocalStorage(
       storageThemeKey,
@@ -63,6 +52,12 @@ function App() {
     );
     setLocalStorage(storageThemeKey, darkmode);
   }, [darkmode]);
+
+  //TODO fix bug deleting completed tasks when reordering while fitered by 'active'
+  useEffect(() => {
+    data.forEach((v) => console.log(v));
+    setLocalStorage(storageListKey, data);
+  }, [data]);
 
   const handleAdd = function () {
     if (!textInputRef.current) return;
@@ -132,9 +127,7 @@ function App() {
                 className="flex h-12 items-center rounded-b-md bg-bkg px-6 transition-colors md:h-16"
               >
                 <div className="flex w-full items-center justify-between text-content/50">
-                  <div className="">
-                    {data.filter((v) => !v.marked).length} items left
-                  </div>
+                  <div>{data.filter((v) => !v.marked).length} items left</div>
                   <div className="hidden sm:block">
                     <Filter filter={(t) => setFilter(t)} active={filter} />
                   </div>
