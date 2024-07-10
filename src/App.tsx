@@ -20,7 +20,7 @@ import useInputType from "./hooks/useInputType.ts";
 
 const dummy = [
   { id: 1, name: "Complete online JavaScript course", marked: true },
-  { id: 2, name: "Jog around the park 3x", marked: false },
+  { id: 2, name: "Jog around the park 3x", marked: true },
   { id: 3, name: "10 minutes meditation", marked: false },
   { id: 4, name: "Read for 1 hour", marked: false },
   { id: 5, name: "Pick up groceries", marked: false },
@@ -34,7 +34,7 @@ export type filterT = "all" | "active" | "completed";
 function App() {
   const inputType = useInputType();
   const textInputRef = useRef<ElementRef<"input">>(null);
-  const [filter, setFilter] = useState<filterT>("all");
+  const [filter, setFilter] = useState<filterT>("completed");
   const [data, setData] = useState<dataType>(
     getLocalStorage(storageListKey, dummy),
   );
@@ -50,14 +50,13 @@ function App() {
       "data-theme",
       darkmode ? "dark" : "light",
     );
-    setLocalStorage(storageThemeKey, darkmode);
   }, [darkmode]);
 
   //TODO fix bug deleting completed tasks when reordering while fitered by 'active'
-  useEffect(() => {
-    data.forEach((v) => console.log(v));
-    setLocalStorage(storageListKey, data);
-  }, [data]);
+  // useEffect(() => {
+  //   data.forEach((v) => console.log(v));
+  //   setLocalStorage(storageListKey, data);
+  // }, [data]);
 
   const handleAdd = function () {
     if (!textInputRef.current) return;
@@ -72,7 +71,14 @@ function App() {
       <div className="mx-auto max-w-[540px]">
         <header className="my-12 flex h-5 flex-wrap justify-between">
           <img src={logo} alt="Todo App Logo" />
-          <button onClick={() => setDarkmode((prev) => !prev)}>
+          <button
+            onClick={() => {
+              setDarkmode((prev) => {
+                setLocalStorage(storageThemeKey, !darkmode);
+                return !prev;
+              });
+            }}
+          >
             <img src={darkmode ? sun : moon} alt="Toggle theme mode" />
           </button>
         </header>
@@ -103,13 +109,15 @@ function App() {
           >
             <AnimatePresence>
               {data.map((v) => {
-                if (filter === "active" && v.marked) return;
-                if (filter === "completed" && !v.marked) return;
+                const hide =
+                  (filter === "active" && v.marked) ||
+                  (filter === "completed" && !v.marked);
 
                 return (
                   <ListItem
                     key={v.id}
                     data={v}
+                    hidden={hide}
                     remove={(id) => {
                       if (!id) return;
                       setData((prev) => deleteFromList(prev, id));
