@@ -10,10 +10,9 @@ type propT = {
   data: dataType[number];
   remove: (id: number) => void;
   mark: (id: number) => void;
-  hidden: boolean;
 };
 
-function ListItem({ data, remove, mark, hidden }: propT) {
+function ListItem({ data, remove, mark }: propT) {
   const [isDragState, setIsDragState] = useState<boolean>(false);
   const inputType = useInputType();
   const controls = useDragControls();
@@ -33,7 +32,7 @@ function ListItem({ data, remove, mark, hidden }: propT) {
         if (isDragState) return;
         mark(data.id);
       }}
-      className={`${hidden && "hidden"} group relative flex h-12 select-none items-center gap-3 bg-bkg transition-colors first:rounded-t-md last:rounded-b-xl hover:cursor-pointer md:h-16`}
+      className={`group relative flex h-12 select-none items-center gap-3 bg-bkg transition-colors first:rounded-t-md hover:cursor-pointer md:h-16`}
     >
       <img
         className={`${data.marked || "opacity-50 grayscale"} touch-none py-2 pl-5 group-hover:opacity-100 group-hover:grayscale-0`}

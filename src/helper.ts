@@ -21,6 +21,10 @@ export const addToList = function (list: dataType, value: string): dataType {
   return [{ id: new Date().getTime(), name: value, marked: false }, ...list];
 };
 
+export const addToIndex = function (list: dataType, index: number) {
+  return list.splice(index, 1);
+};
+
 export const toggleFromList = function (list: dataType, id: number): dataType {
   return list.map((item) => {
     return item.id === id ? { ...item, marked: !item.marked } : item;

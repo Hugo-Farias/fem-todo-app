@@ -31,10 +31,14 @@ export type dataType = typeof dummy;
 
 export type filterT = "all" | "active" | "completed";
 
+type hiddenT = Set<{ index: number; data: dataType[0] }>;
+
+const hiddenArr: hiddenT = new Set();
+
 function App() {
   const inputType = useInputType();
   const textInputRef = useRef<ElementRef<"input">>(null);
-  const [filter, setFilter] = useState<filterT>("completed");
+  const [filter, setFilter] = useState<filterT>("all");
   const [data, setData] = useState<dataType>(
     getLocalStorage(storageListKey, dummy),
   );
@@ -52,10 +56,10 @@ function App() {
     );
   }, [darkmode]);
 
-  //TODO fix bug deleting completed tasks when reordering while fitered by 'active'
+  //TODO fix bug deleting completed tasks when reordering while fitered
+
   // useEffect(() => {
-  //   data.forEach((v) => console.log(v));
-  //   setLocalStorage(storageListKey, data);
+  //   console.log(hiddenArr);
   // }, [data]);
 
   const handleAdd = function () {
@@ -104,20 +108,29 @@ function App() {
           <Reorder.Group
             axis="y"
             values={data}
-            onReorder={setData}
+            onReorder={(e) => {
+              if (filter === "active") {
+                const tempArr = data.map((v) => !v.marked);
+                hiddenArr.forEach((v) => tempArr.splice(v.index, 1, v.data));
+                console.log(tempArr);
+              }
+              return setData(e);
+            }}
             className="w-full divide-y divide-content/20 text-content drop-shadow-xl"
           >
             <AnimatePresence>
               {data.map((v) => {
-                const hide =
-                  (filter === "active" && v.marked) ||
-                  (filter === "completed" && !v.marked);
+                if (
+                  (filter === "completed" && !v.marked) ||
+                  (filter === "active" && v.marked)
+                ) {
+                  return null;
+                }
 
                 return (
                   <ListItem
                     key={v.id}
                     data={v}
-                    hidden={hide}
                     remove={(id) => {
                       if (!id) return;
                       setData((prev) => deleteFromList(prev, id));
