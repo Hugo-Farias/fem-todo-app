@@ -1,4 +1,4 @@
-import { dataType } from "./App.tsx";
+import { dataType, hiddenT } from "./App.tsx";
 
 export const storageThemeKey = "darkMode";
 export const storageListKey = "list";
@@ -21,8 +21,8 @@ export const addToList = function (list: dataType, value: string): dataType {
   return [{ id: new Date().getTime(), name: value, marked: false }, ...list];
 };
 
-export const addToIndex = function (list: dataType, index: number) {
-  return list.splice(index, 1);
+export const addToSet = function (list: dataType, set: hiddenT) {
+  list.forEach((v, i) => set.add({ index: i, data: v }));
 };
 
 export const toggleFromList = function (list: dataType, id: number): dataType {

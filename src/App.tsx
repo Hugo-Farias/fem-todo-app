@@ -12,6 +12,7 @@ import {
   addToList,
   clearList,
   storageListKey,
+  addToSet,
 } from "./helper.ts";
 import { AnimatePresence, Reorder, motion } from "framer-motion";
 import ListItem from "./component/ListItem.tsx";
@@ -31,14 +32,14 @@ export type dataType = typeof dummy;
 
 export type filterT = "all" | "active" | "completed";
 
-type hiddenT = Set<{ index: number; data: dataType[0] }>;
+export type hiddenT = Set<{ index: number; data: dataType[0] }>;
 
 const hiddenArr: hiddenT = new Set();
 
 function App() {
   const inputType = useInputType();
   const textInputRef = useRef<ElementRef<"input">>(null);
-  const [filter, setFilter] = useState<filterT>("all");
+  const [filter, setFilter] = useState<filterT>("completed");
   const [data, setData] = useState<dataType>(
     getLocalStorage(storageListKey, dummy),
   );
@@ -61,6 +62,24 @@ function App() {
   // useEffect(() => {
   //   console.log(hiddenArr);
   // }, [data]);
+
+  useEffect(() => {
+    if (hiddenArr.size === 0) return;
+    hiddenArr.clear();
+    if (filter === "completed" && hiddenArr.size === 0) {
+      addToSet(
+        data.filter((v) => !v.marked),
+        hiddenArr,
+      );
+      console.log(hiddenArr);
+    } else if (filter === "active" && hiddenArr.size === 0) {
+      addToSet(
+        data.filter((v) => v.marked),
+        hiddenArr,
+      );
+      console.log(hiddenArr);
+    }
+  }, [filter, data]);
 
   const handleAdd = function () {
     if (!textInputRef.current) return;
@@ -108,14 +127,7 @@ function App() {
           <Reorder.Group
             axis="y"
             values={data}
-            onReorder={(e) => {
-              if (filter === "active") {
-                const tempArr = data.map((v) => !v.marked);
-                hiddenArr.forEach((v) => tempArr.splice(v.index, 1, v.data));
-                console.log(tempArr);
-              }
-              return setData(e);
-            }}
+            onReorder={setData}
             className="w-full divide-y divide-content/20 text-content drop-shadow-xl"
           >
             <AnimatePresence>
