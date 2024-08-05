@@ -37,3 +37,7 @@
     }
   }
 }
+
+html {
+  min-height: 24.97rem;
+}
