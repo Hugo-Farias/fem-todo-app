@@ -12,12 +12,13 @@ import {
   addToList,
   clearList,
   storageListKey,
-  addToSet,
 } from "./helper.ts";
 import { AnimatePresence, Reorder, motion } from "framer-motion";
 import ListItem from "./component/ListItem.tsx";
 import Filter from "./component/Filter.tsx";
 import useInputType from "./hooks/useInputType.ts";
+
+let timeout: number;
 
 const dummy = [
   { id: 1, name: "Complete online JavaScript course", marked: true },
@@ -34,12 +35,10 @@ export type filterT = "all" | "active" | "completed";
 
 export type hiddenT = Set<{ index: number; data: dataType[0] }>;
 
-const hiddenArr: hiddenT = new Set();
-
 function App() {
   const inputType = useInputType();
   const textInputRef = useRef<ElementRef<"input">>(null);
-  const [filter, setFilter] = useState<filterT>("completed");
+  const [filter, setFilter] = useState<filterT>("all");
   const [data, setData] = useState<dataType>(
     getLocalStorage(storageListKey, dummy),
   );
@@ -57,29 +56,14 @@ function App() {
     );
   }, [darkmode]);
 
-  //TODO fix bug deleting completed tasks when reordering while fitered
-
-  // useEffect(() => {
-  //   console.log(hiddenArr);
-  // }, [data]);
-
   useEffect(() => {
-    if (hiddenArr.size === 0) return;
-    hiddenArr.clear();
-    if (filter === "completed" && hiddenArr.size === 0) {
-      addToSet(
-        data.filter((v) => !v.marked),
-        hiddenArr,
-      );
-      console.log(hiddenArr);
-    } else if (filter === "active" && hiddenArr.size === 0) {
-      addToSet(
-        data.filter((v) => v.marked),
-        hiddenArr,
-      );
-      console.log(hiddenArr);
-    }
-  }, [filter, data]);
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      console.log("timeout");
+      setLocalStorage(storageListKey, data);
+    }, 500);
+  }, [data]);
 
   const handleAdd = function () {
     if (!textInputRef.current) return;
@@ -127,7 +111,10 @@ function App() {
           <Reorder.Group
             axis="y"
             values={data}
-            onReorder={setData}
+            onReorder={(e) => {
+              if (filter !== "all") return;
+              return setData(e);
+            }}
             className="w-full divide-y divide-content/20 text-content drop-shadow-xl"
           >
             <AnimatePresence>
@@ -179,7 +166,7 @@ function App() {
           <Filter filter={(t) => setFilter(t)} active={filter} />
         </div>
         <footer className="mt-10 flex select-none justify-center text-sm text-content/40">
-          {`Drag and drop ${inputType === "touch" ? "the left side" : ""} to reorder list`}
+          {`${filter === "all" ? "Drag and drop" : "Switch filter to 'All' "} ${filter === "all" && inputType === "touch" ? "the left side" : ""} to reorder list`}
         </footer>
       </div>
     </div>
