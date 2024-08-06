@@ -60,7 +60,6 @@ function App() {
     clearTimeout(timeout);
 
     timeout = setTimeout(() => {
-      console.log("timeout");
       setLocalStorage(storageListKey, data);
     }, 500);
   }, [data]);
@@ -76,7 +75,7 @@ function App() {
   return (
     <div className="px-6 pb-10 font-josefin text-xs font-normal md:text-base">
       <div className="mx-auto max-w-[540px]">
-        <header className="my-12 flex h-5 flex-wrap justify-between">
+        <header className="my-12 flex h-5 flex-wrap justify-between md:py-5">
           <img src={logo} alt="Todo App Logo" />
           <button
             onClick={() => {
