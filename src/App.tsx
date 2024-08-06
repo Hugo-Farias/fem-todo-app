@@ -39,6 +39,7 @@ function App() {
   const inputType = useInputType();
   const textInputRef = useRef<ElementRef<"input">>(null);
   const [filter, setFilter] = useState<filterT>("all");
+  const [isDraggable, setIsDraggable] = useState<boolean>(true);
   const [data, setData] = useState<dataType>(
     getLocalStorage(storageListKey, dummy),
   );
@@ -111,7 +112,13 @@ function App() {
             axis="y"
             values={data}
             onReorder={(e) => {
-              if (filter !== "all") return;
+              if (filter !== "all") {
+                setIsDraggable(false);
+                setTimeout(() => {
+                  setIsDraggable(true);
+                }, 1000);
+                return null;
+              }
               return setData(e);
             }}
             className="w-full divide-y divide-content/20 text-content drop-shadow-xl"
@@ -164,7 +171,9 @@ function App() {
         <div className="h-12 rounded-md bg-bkg shadow-xl sm:hidden">
           <Filter filter={(t) => setFilter(t)} active={filter} />
         </div>
-        <footer className="mt-10 flex select-none justify-center text-sm text-content/40">
+        <footer
+          className={`${!isDraggable && "text-red-500"} mt-10 flex select-none justify-center text-sm text-content/40`}
+        >
           {`${filter === "all" ? "Drag and drop" : "Switch filter to 'All' "} ${filter === "all" && inputType === "touch" ? "the left side" : ""} to reorder list`}
         </footer>
       </div>
